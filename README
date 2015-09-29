@@ -1,0 +1,23 @@
+
+Requiremenets:
+ puppet module install puppetlabs-corosync
+ puppet module install puppetlabs-haproxy
+ puppet module install duritong-sysctl 
+
+for i in  duritong-sysctl puppetlabs-corosync puppetlabs-haproxy; do puppet  module install $i; done
+
+Use:
+ puppet apply -vd -e 'include profile::galera'
+ 
+After install on master - run:
+mysql
+  use mysql
+  INSERT INTO user (Host,User,ssl_cipher,x509_issuer,x509_subject) values ('10.140.21.10%','cluster_watcher','','','');
+  FLUSH PRIVILEGES;
+
+If you suffering race condition - while installing galera on 2 and 3 node:
+ - pause puppet (CNTR+Z)
+ - restart corosyn (service corosync restart)
+ - unpause puppet (fg)
+
+This will start mysql through corosync clone resource and we don't need custom pacemaker provider.

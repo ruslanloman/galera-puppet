@@ -1,0 +1,5 @@
+set wsrep_on='off';
+delete from mysql.user where user='';
+grant all on *.* to '<%= @sst_user %>'@'%' identified by '<%= @sst_pass %>';
+grant all on *.* to '<%= @sst_user %>'@'localhost' identified by '<%= @sst_pass %>';
+flush privileges;

@@ -1,0 +1,6 @@
+[client]
+user=root
+host=localhost
+<% unless @root_pass == 'UNSET' -%>
+password=<%= @root_pass %>
+<% end -%>
